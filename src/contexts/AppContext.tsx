@@ -107,7 +107,7 @@ function generateMockPairs(count: number): PhotoPair[] {
       exitPhoto: isCleanRoom ? pieceCleanImg : `https://images.unsplash.com/photo-${1600210492000000 + i * 1000000}?w=800&q=80`,
       score: Math.floor(Math.random() * 40) + 60,
       status: i < 3 ? (["compliant", "to_verify", "non_compliant"][i] as PhotoPair["status"]) : null,
-      issues: generateMockIssues(Math.floor(Math.random() * 4), rooms[i]),
+      issues: generateMockIssues(Math.floor(Math.random() * 3) + 1, rooms[i]), // 1 à 3 anomalies
       qualityBadges: {
         sharpness: Math.floor(Math.random() * 2) + 3,
         lighting: Math.floor(Math.random() * 3) + 2,

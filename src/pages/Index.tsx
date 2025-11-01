@@ -1,16 +1,16 @@
 import { Link } from "react-router-dom";
 import { useApp } from "@/contexts/AppContext";
-import { Home, CheckCircle, Clock, TrendingUp, ArrowRight } from "lucide-react";
+import { Home, CheckCircle, Clock, TrendingUp, ArrowRight, Camera, DollarSign } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function Index() {
   const { biens } = useApp();
 
   const stats = [
-    { icon: Home, label: "Biens actifs", value: "47", color: "text-accent" },
-    { icon: CheckCircle, label: "Comparaisons ce mois", value: "234", color: "text-success" },
-    { icon: Clock, label: "Temps moyen", value: "3.2 min", color: "text-primary" },
-    { icon: TrendingUp, label: "Litiges évités", value: "15", color: "text-warning" },
+    { icon: Home, label: "Biens actifs", value: "127", color: "text-accent" },
+    { icon: Camera, label: "Photos comparées", value: "1,847", color: "text-success" },
+    { icon: Clock, label: "Temps gagné", value: "18h", color: "text-primary" },
+    { icon: DollarSign, label: "Argent économisé", value: "3,200€", color: "text-warning" },
   ];
 
   const statusConfig = {
