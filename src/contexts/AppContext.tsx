@@ -51,6 +51,10 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 import tacheMurImg from "@/assets/tache-mur.png";
 import rayureParquetImg from "@/assets/rayure-parquet.png";
 import pieceCleanImg from "@/assets/piece-clean.png";
+import bienRivoliImg from "@/assets/bien-rivoli.png";
+import bienPaixImg from "@/assets/bien-paix.png";
+import bienMontaigneImg from "@/assets/bien-montaigne.png";
+import bienVendomeImg from "@/assets/bien-vendome.png";
 
 function generateMockIssues(count: number, roomName: string): Issue[] {
   const types = [
@@ -118,11 +122,17 @@ function generateMockPairs(count: number): PhotoPair[] {
 }
 
 function generateMockBiens(count: number = 6): Bien[] {
-  const streets = ["Rivoli", "la Paix", "Vaugirard", "Montmartre", "Saint-Germain", "Raspail"];
+  const biensData = [
+    { address: "10 Rue de Rivoli, 75001 Paris", photo: bienRivoliImg },
+    { address: "11 Rue de la Paix, 75002 Paris", photo: bienPaixImg },
+    { address: "15 Avenue Montaigne, 75008 Paris", photo: bienMontaigneImg },
+    { address: "8 Place Vendôme, 75001 Paris", photo: bienVendomeImg },
+  ];
+
   return Array.from({ length: count }, (_, i) => ({
     id: i + 1,
-    address: `${10 + i} rue de ${streets[i % streets.length]}, 750${(i % 9) + 1}${i % 2} Paris`,
-    photo: `https://images.unsplash.com/photo-${1560184897000000 + i * 10000000}?w=400&q=80`,
+    address: biensData[i]?.address || `${10 + i} rue de test, 750${(i % 9) + 1}${i % 2} Paris`,
+    photo: biensData[i]?.photo || `https://images.unsplash.com/photo-${1560184897000000 + i * 10000000}?w=400&q=80`,
     status: (["completed", "in_progress", "to_verify"][i % 3] as Bien["status"]),
     entryDate: new Date(2024, i % 12, 1).toISOString(),
     exitDate: new Date(2024, (i + 6) % 12, 15).toISOString(),
