@@ -52,13 +52,29 @@ import tacheMurImg from "@/assets/tache-mur.png";
 import rayureParquetImg from "@/assets/rayure-parquet.png";
 import pieceCleanImg from "@/assets/piece-clean.png";
 
-function generateMockIssues(count: number): Issue[] {
+function generateMockIssues(count: number, roomName: string): Issue[] {
   const types = [
     { type: "scratch", description: "Rayure sur parquet", severity: "medium" as const, thumbnail: rayureParquetImg },
     { type: "stain", description: "Tache au mur", severity: "low" as const, thumbnail: tacheMurImg },
     { type: "broken", description: "Poignée cassée", severity: "high" as const, thumbnail: undefined },
     { type: "dirt", description: "Traces de saleté", severity: "low" as const, thumbnail: undefined },
   ];
+  
+  // Pour la Chambre 1, on force les 2 premières anomalies (rayure + tache)
+  if (roomName === "Chambre 1") {
+    return types.slice(0, 2).map((t, i) => ({
+      id: i + 1,
+      ...t,
+      location: { x: Math.random() * 600 + 100, y: Math.random() * 400 + 100 },
+      contourPoints: `${Math.random() * 600 + 100},${Math.random() * 400 + 100} ${Math.random() * 600 + 120},${Math.random() * 400 + 120} ${Math.random() * 600 + 110},${Math.random() * 400 + 140}`,
+    }));
+  }
+  
+  // Pour la Cuisine, pas d'anomalies
+  if (roomName === "Cuisine") {
+    return [];
+  }
+  
   return types.slice(0, count).map((t, i) => ({
     id: i + 1,
     ...t,
@@ -80,7 +96,7 @@ function generateMockPairs(count: number): PhotoPair[] {
       exitPhoto: isCleanRoom ? pieceCleanImg : `https://images.unsplash.com/photo-${1600210492000000 + i * 1000000}?w=800&q=80`,
       score: Math.floor(Math.random() * 40) + 60,
       status: i < 3 ? (["compliant", "to_verify", "non_compliant"][i] as PhotoPair["status"]) : null,
-      issues: generateMockIssues(Math.floor(Math.random() * 4)),
+      issues: generateMockIssues(Math.floor(Math.random() * 4), rooms[i]),
       qualityBadges: {
         sharpness: Math.floor(Math.random() * 2) + 3,
         lighting: Math.floor(Math.random() * 3) + 2,
