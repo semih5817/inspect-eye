@@ -50,6 +50,7 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 
 import tacheMurImg from "@/assets/tache-mur.png";
 import rayureParquetImg from "@/assets/rayure-parquet.png";
+import pieceCleanImg from "@/assets/piece-clean.png";
 
 function generateMockIssues(count: number): Issue[] {
   const types = [
@@ -68,20 +69,25 @@ function generateMockIssues(count: number): Issue[] {
 
 function generateMockPairs(count: number): PhotoPair[] {
   const rooms = ["Salon", "Cuisine", "Chambre 1", "Chambre 2", "Salle de bain", "WC", "Entrée", "Couloir"];
-  return Array.from({ length: Math.min(count, rooms.length) }, (_, i) => ({
-    id: i + 1,
-    room: rooms[i],
-    entryPhoto: `https://images.unsplash.com/photo-${1522708323000000 + i * 1000000}?w=800&q=80`,
-    exitPhoto: `https://images.unsplash.com/photo-${1600210492000000 + i * 1000000}?w=800&q=80`,
-    score: Math.floor(Math.random() * 40) + 60,
-    status: i < 3 ? (["compliant", "to_verify", "non_compliant"][i] as PhotoPair["status"]) : null,
-    issues: generateMockIssues(Math.floor(Math.random() * 4)),
-    qualityBadges: {
-      sharpness: Math.floor(Math.random() * 2) + 3,
-      lighting: Math.floor(Math.random() * 3) + 2,
-      angle: Math.floor(Math.random() * 2) + 4,
-    },
-  }));
+  return Array.from({ length: Math.min(count, rooms.length) }, (_, i) => {
+    // Pour la première pièce (Salon), on utilise la photo clean pour entrée et sortie
+    const isCleanRoom = i === 0;
+    
+    return {
+      id: i + 1,
+      room: rooms[i],
+      entryPhoto: isCleanRoom ? pieceCleanImg : `https://images.unsplash.com/photo-${1522708323000000 + i * 1000000}?w=800&q=80`,
+      exitPhoto: isCleanRoom ? pieceCleanImg : `https://images.unsplash.com/photo-${1600210492000000 + i * 1000000}?w=800&q=80`,
+      score: isCleanRoom ? 100 : Math.floor(Math.random() * 40) + 60,
+      status: i < 3 ? (["compliant", "to_verify", "non_compliant"][i] as PhotoPair["status"]) : null,
+      issues: isCleanRoom ? [] : generateMockIssues(Math.floor(Math.random() * 4)),
+      qualityBadges: {
+        sharpness: Math.floor(Math.random() * 2) + 3,
+        lighting: Math.floor(Math.random() * 3) + 2,
+        angle: Math.floor(Math.random() * 2) + 4,
+      },
+    };
+  });
 }
 
 function generateMockBiens(count: number = 6): Bien[] {
