@@ -5,6 +5,8 @@ import { Input } from "@/components/ui/input";
 import ConformityGauge from "@/components/ConformityGauge";
 import { Download, Mail, Link2, FileText } from "lucide-react";
 import { toast } from "sonner";
+import rayureParquetImg from "@/assets/rayure-parquet.png";
+import tacheMurImg from "@/assets/tache-mur.png";
 
 export default function Reports() {
   const { currentBien } = useApp();
@@ -137,12 +139,12 @@ export default function Reports() {
                   <div className="flex items-start gap-4">
                     <div className="flex gap-2">
                       <img
-                        src={pair.entryPhoto}
+                        src={pair.room === "Chambre 1" && pair.status === "non_compliant" ? rayureParquetImg : pair.entryPhoto}
                         alt="Entrée"
                         className="w-24 h-20 object-cover rounded"
                       />
                       <img
-                        src={pair.exitPhoto}
+                        src={pair.room === "Chambre 1" && pair.status === "non_compliant" ? tacheMurImg : pair.exitPhoto}
                         alt="Sortie"
                         className="w-24 h-20 object-cover rounded"
                       />
