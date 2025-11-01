@@ -142,7 +142,7 @@ function generateMockBiens(count: number = 6): Bien[] {
 }
 
 export function AppProvider({ children }: { children: ReactNode }) {
-  const [biens, setBiens] = useState<Bien[]>(generateMockBiens());
+  const [biens, setBiens] = useState<Bien[]>(generateMockBiens(4));
   const [currentBien, setCurrentBien] = useState<Bien | null>(null);
 
   const updatePairStatus = (pairId: number, status: PhotoPair["status"], notes?: string) => {
