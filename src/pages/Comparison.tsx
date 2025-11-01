@@ -186,7 +186,7 @@ export default function Comparison() {
               <div className="space-y-2 max-h-64 overflow-y-auto">
                 {currentPair.issues.length > 0 ? (
                   currentPair.issues.map((issue) => (
-                    <IssueCard key={issue.id} issue={issue} thumbnail={currentPair.exitPhoto} />
+                    <IssueCard key={issue.id} issue={issue} thumbnail={issue.thumbnail || currentPair.exitPhoto} />
                   ))
                 ) : (
                   <p className="text-sm text-muted-foreground text-center py-4">

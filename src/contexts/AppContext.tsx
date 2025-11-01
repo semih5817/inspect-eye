@@ -7,6 +7,7 @@ interface Issue {
   severity: "low" | "medium" | "high";
   location: { x: number; y: number };
   contourPoints?: string;
+  thumbnail?: string;
 }
 
 interface QualityBadges {
@@ -47,12 +48,15 @@ interface AppContextType {
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
+import tacheMurImg from "@/assets/tache-mur.png";
+import rayureParquetImg from "@/assets/rayure-parquet.png";
+
 function generateMockIssues(count: number): Issue[] {
   const types = [
-    { type: "scratch", description: "Rayure sur parquet", severity: "medium" as const },
-    { type: "stain", description: "Tache au mur", severity: "low" as const },
-    { type: "broken", description: "Poignée cassée", severity: "high" as const },
-    { type: "dirt", description: "Traces de saleté", severity: "low" as const },
+    { type: "scratch", description: "Rayure sur parquet", severity: "medium" as const, thumbnail: rayureParquetImg },
+    { type: "stain", description: "Tache au mur", severity: "low" as const, thumbnail: tacheMurImg },
+    { type: "broken", description: "Poignée cassée", severity: "high" as const, thumbnail: undefined },
+    { type: "dirt", description: "Traces de saleté", severity: "low" as const, thumbnail: undefined },
   ];
   return types.slice(0, count).map((t, i) => ({
     id: i + 1,
