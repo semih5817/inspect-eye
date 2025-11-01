@@ -60,7 +60,22 @@ function generateMockIssues(count: number, roomName: string): Issue[] {
     { type: "dirt", description: "Traces de saleté", severity: "low" as const, thumbnail: undefined },
   ];
   
-  // Pour la Chambre 1, on force les 2 premières anomalies (rayure + tache)
+  // Salon : aucune anomalie
+  if (roomName === "Salon") {
+    return [];
+  }
+  
+  // Cuisine : seulement Poignée cassée
+  if (roomName === "Cuisine") {
+    return [types[2]].map((t, i) => ({
+      id: i + 1,
+      ...t,
+      location: { x: Math.random() * 600 + 100, y: Math.random() * 400 + 100 },
+      contourPoints: `${Math.random() * 600 + 100},${Math.random() * 400 + 100} ${Math.random() * 600 + 120},${Math.random() * 400 + 120} ${Math.random() * 600 + 110},${Math.random() * 400 + 140}`,
+    }));
+  }
+  
+  // Chambre 1 : Rayure sur parquet + Tache au mur
   if (roomName === "Chambre 1") {
     return types.slice(0, 2).map((t, i) => ({
       id: i + 1,
@@ -70,11 +85,7 @@ function generateMockIssues(count: number, roomName: string): Issue[] {
     }));
   }
   
-  // Pour la Cuisine, pas d'anomalies
-  if (roomName === "Cuisine") {
-    return [];
-  }
-  
+  // Pour les autres pièces, génération aléatoire
   return types.slice(0, count).map((t, i) => ({
     id: i + 1,
     ...t,
